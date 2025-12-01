@@ -1,0 +1,47 @@
+﻿{% extends "base.html" %}
+{% block title %}Create Event{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3">Create Event</h1>
+  <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">← Back</a>
+</div>
+
+<form method="post" class="row g-3">
+  <div class="col-md-6">
+    <label class="form-label">Title</label>
+    <input type="text" name="title" class="form-control" required>
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Venue</label>
+    <input type="text" name="venue" class="form-control">
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Description</label>
+    <textarea name="description" class="form-control" rows="4"></textarea>
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Start time (ISO)</label>
+    <input type="text" name="start_time" class="form-control" placeholder="YYYY-MM-DDTHH:MM:SS" >
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">End time (ISO)</label>
+    <input type="text" name="end_time" class="form-control" placeholder="YYYY-MM-DDTHH:MM:SS" >
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Image filename</label>
+    <input type="text" name="image_filename" class="form-control" placeholder="event_1.jpg">
+    <div class="form-text">Filename in static/uploads (or leave empty)</div>
+  </div>
+
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Create Event</button>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary ms-2">Cancel</a>
+  </div>
+</form>
+{% endblock %}

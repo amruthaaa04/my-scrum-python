@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Admin Dashboard</h2>
+	<a class="btn btn-primary" href="{{ url_for('admin_create_event') }}">+ New Event</a>
+    </div>
+
+    <h4 class="mt-4">All Events</h4>
+    <table class="table table-bordered table-striped mt-2">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Venue</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for e in events %}
+            <tr>
+                <td>{{ e.id }}</td>
+                <td>{{ e.title }}</td>
+                <td>{{ e.venue }}</td>
+                <td>{{ e.start_time|nice_dt }}</td>
+                <td>{{ e.end_time|nice_dt }}</td>
+                <td>
+                    {% if e.image_filename %}
+                        <img src="{{ url_for('uploads', filename=e.image_filename) }}" width="80">
+                    {% else %}
+                        No image
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('admin_edit_event', event_id=e.id) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{{ url_for('admin_delete_event', event_id=e.id) }}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+﻿{% extends "base.html" %}
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block content %}
+<h2>{{ event.title }}</h2>
+
+<img src="/static/uploads/{{ event.image_filename }}" class="img-fluid mb-4" />
+
+<p><strong>Venue:</strong> {{ event.venue }}</p>
+<p><strong>Description:</strong> {{ event.description }}</p>
+
+<a href="/book/{{ event.id }}" class="btn btn-primary btn-lg">Book Now</a>
+{% endblock %}

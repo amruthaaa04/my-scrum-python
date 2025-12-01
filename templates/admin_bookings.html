@@ -1,0 +1,49 @@
+﻿{% extends 'base.html' %}
+{% block title %}Bookings{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3">Bookings</h1>
+  <a class="btn btn-outline-secondary" href="{{ url_for('dashboard') }}">← Back to Dashboard</a>
+</div>
+
+{% if not bookings %}
+  <div class="alert alert-info">No bookings found.</div>
+{% else %}
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th style="width:6%;">#</th>
+          <th style="width:30%;">Event</th>
+          <th style="width:30%;">User</th>
+          <th style="width:12%;">Seat</th>
+          <th style="width:22%;">Booked At</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if not fallback %}
+          {% for b in bookings %}
+          <tr>
+            <td>{{ b.id }}</td>
+            <td><strong>{{ b.event.title }}</strong><br><small class="text-muted">{{ b.event.venue }}</small></td>
+            <td>{% if b.user %}{{ b.user.full_name or b.user.email }}<br><small class="text-muted">{{ b.user.email }}</small>{% else %}<span class="text-muted">—</span>{% endif %}</td>
+            <td>{{ b.seat or '—' }}</td>
+            <td>{{ b.created_at or '—' }}</td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          {% for r in bookings %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td><strong>{{ r.event.title }}</strong><br><small class="text-muted">{{ r.event.venue }}</small></td>
+            <td>{% if r.user %}{{ r.user.full_name or r.user.email }}<br><small class="text-muted">{{ r.user.email }}</small>{% else %}<span class="text-muted">—</span>{% endif %}</td>
+            <td>{{ r.seat or '—' }}</td>
+            <td>{{ r.created_at or '—' }}</td>
+          </tr>
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+{% endif %}
+{% endblock %}

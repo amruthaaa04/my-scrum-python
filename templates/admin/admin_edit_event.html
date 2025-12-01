@@ -1,0 +1,48 @@
+﻿{% extends 'base.html' %}
+{% block title %}Edit Event{% endblock %}
+
+{% block content %}
+<h2>Edit Event</h2>
+
+<form method="POST" enctype="multipart/form-data">
+
+  <div class="mb-3">
+    <label>Title</label>
+    <input type="text" class="form-control" name="title" value="{{ event.title }}">
+  </div>
+
+  <div class="mb-3">
+    <label>Description</label>
+    <textarea class="form-control" name="description">{{ event.description }}</textarea>
+  </div>
+
+  <div class="mb-3">
+    <label>Venue</label>
+    <input type="text" class="form-control" name="venue" value="{{ event.venue }}">
+  </div>
+
+  <div class="mb-3">
+    <label>Start Time</label>
+    <input type="text" class="form-control" name="start_time" value="{{ event.start_time }}">
+  </div>
+
+  <div class="mb-3">
+    <label>End Time</label>
+    <input type="text" class="form-control" name="end_time" value="{{ event.end_time }}">
+  </div>
+
+  <div class="mb-3">
+    <label>Capacity</label>
+    <input type="number" class="form-control" name="capacity" value="{{ event.capacity }}">
+  </div>
+
+  <div class="mb-3">
+    <label>Replace Image?</label>
+    <input type="file" class="form-control" name="image">
+  </div>
+
+  <button class="btn btn-warning">Save Changes</button>
+
+</form>
+
+{% endblock %}

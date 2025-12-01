@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>User Management</h2>
+<table class="table table-bordered">
+  <tr>
+    <th>ID</th><th>Name</th><th>Email</th><th>Admin</th><th>Actions</th>
+  </tr>
+  {% for u in users %}
+  <tr>
+    <td>{{ u.id }}</td>
+    <td>{{ u.full_name }}</td>
+    <td>{{ u.email }}</td>
+    <td>{{ "Yes" if u.is_admin else "No" }}</td>
+    <td>
+      <form method="POST" action="{{ url_for('admin.toggle_admin', user_id=u.id) }}">
+        <button class="btn btn-sm btn-primary">Toggle Admin</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

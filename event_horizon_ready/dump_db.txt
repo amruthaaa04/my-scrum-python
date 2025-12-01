@@ -1,0 +1,10 @@
+import sqlite3, json, os
+
+conn = sqlite3.connect("app.db")
+cur = conn.cursor()
+
+cur.execute("SELECT id, title, image_filename FROM event ORDER BY id")
+rows = cur.fetchall()
+
+print(json.dumps(rows, indent=2))
+conn.close()

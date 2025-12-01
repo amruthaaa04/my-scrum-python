@@ -1,0 +1,12 @@
+﻿import sqlite3, os
+BASE = os.path.dirname(os.path.abspath(__file__))
+db = os.path.join(BASE, "app.db")
+conn = sqlite3.connect(db)
+cur = conn.cursor()
+cur.execute("SELECT id, title, image_filename FROM event WHERE title='Robotics Championship'")
+print("Before:", cur.fetchone())
+cur.execute("UPDATE event SET image_filename = ? WHERE title = ?", ("event_4.jpg", "Robotics Championship"))
+conn.commit()
+cur.execute("SELECT id, title, image_filename FROM event WHERE title='Robotics Championship'")
+print("After:", cur.fetchone())
+conn.close()

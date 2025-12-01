@@ -1,0 +1,15 @@
+﻿{% extends 'base.html' %}
+{% block title %}Event Form{% endblock %}
+{% block content %}
+<h2>{{ 'Edit' if event else 'Create' }} Event</h2>
+
+<form method='POST' enctype='multipart/form-data'>
+  <input name='title' placeholder='Title' class='form-control mb-2' value='{{ event.title if event }}' required>
+  <textarea name='description' placeholder='Description' class='form-control mb-2'>{{ event.description if event }}</textarea>
+  <input name='venue' placeholder='Venue' class='form-control mb-2' value='{{ event.venue if event }}'>
+  <input name='start_time' placeholder='Start Time (ISO)' class='form-control mb-2' value='{{ event.start_time if event }}'>
+  <input name='capacity' placeholder='Capacity' type='number' class='form-control mb-2' value='{{ event.capacity if event }}'>
+  <input name='image' type='file' class='form-control mb-2'>
+  <button class='btn btn-primary'>Save</button>
+</form>
+{% endblock %}

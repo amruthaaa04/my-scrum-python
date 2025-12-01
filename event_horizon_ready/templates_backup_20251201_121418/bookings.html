@@ -1,0 +1,26 @@
+﻿{% extends 'base.html' %}
+{% block title %}My Bookings{% endblock %}
+{% block content %}
+<h2>My Bookings</h2>
+
+{% if bookings %}
+  <table class='table'>
+    <tr><th>Event</th><th>Qty</th><th>Code</th><th>Created</th><th>Action</th></tr>
+    {% for b in bookings %}
+      <tr>
+        <td>{{ b.event.title }}</td>
+        <td>{{ b.qty }}</td>
+        <td>{{ b.ticket_code }}</td>
+        <td>{{ b.created_at }}</td>
+        <td>
+          <form method='POST' action='{{ url_for("cancel_booking", booking_id=b.id) }}' onsubmit="return confirm('Cancel booking?');">
+            <button class='btn btn-sm btn-danger'>Cancel</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <div class='alert alert-info'>You have no bookings yet.</div>
+{% endif %}
+{% endblock %}

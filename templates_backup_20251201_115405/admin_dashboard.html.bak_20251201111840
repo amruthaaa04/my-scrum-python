@@ -1,0 +1,52 @@
+﻿{% extends 'base.html' %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+
+<h4>Events</h4>
+<a class='btn btn-primary mb-2' href='{{ url_for("admin_create_event") }}'>+ New Event</a>
+<table class='table'>
+  <tr><th>ID</th><th>Title</th><th>Capacity</th><th>Actions</th></tr>
+  {% for e in events %}
+  <tr>
+    <td>{{ e.id }}</td>
+    <td>{{ e.title }}</td>
+    <td>{{ e.capacity }}</td>
+    <td>
+      <a class='btn btn-sm btn-warning' href='{{ url_for("admin_edit_event", event_id=e.id) }}'>Edit</a>
+      <form method='POST' action='{{ url_for("admin_delete_event", event_id=e.id) }}' style='display:inline' onsubmit="return confirm('Delete event?');">
+        <button class='btn btn-sm btn-danger'>Delete</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h4>Bookings</h4>
+<table class='table'>
+  <tr><th>ID</th><th>User</th><th>Event</th><th>Qty</th><th>Code</th><th>Action</th></tr>
+  {% for b in bookings %}
+  <tr>
+    <td>{{ b.id }}</td>
+    <td>{{ b.user.full_name }}</td>
+    <td>{{ b.event.title }}</td>
+    <td>{{ b.qty }}</td>
+    <td>{{ b.ticket_code }}</td>
+    <td>
+      <form method='POST' action='{{ url_for("admin_cancel_booking", booking_id=b.id) }}' onsubmit="return confirm('Cancel booking?');">
+        <button class='btn btn-sm btn-danger'>Cancel</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h4>Users</h4>
+<table class='table'>
+  <tr><th>ID</th><th>Name</th><th>Email</th></tr>
+  {% for u in users %}
+    <tr><td>{{ u.id }}</td><td>{{ u.full_name }}</td><td>{{ u.email }}</td></tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

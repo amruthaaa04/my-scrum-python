@@ -1,0 +1,23 @@
+﻿{% extends 'base.html' %}
+{% block title %}Booking Confirmed{% endblock %}
+{% block content %}
+<h2>Booking Confirmed</h2>
+
+<p>Thank you, {{ booking.user.full_name }}. Your booking is confirmed.</p>
+
+<div class='card p-3'>
+  <h4>{{ booking.event.title }}</h4>
+  <p><b>Tickets:</b> {{ booking.qty }}</p>
+  <p><b>Ticket code:</b> <strong>{{ booking.ticket_code }}</strong></p>
+  <p><b>Created:</b> {{ booking.created_at }}</p>
+
+  <!-- simple QR-like SVG with ticket code -->
+  <svg width='220' height='220' xmlns='http://www.w3.org/2000/svg'>
+    <rect width='220' height='220' fill='#111'/>
+    <text x='110' y='120' font-size='14' fill='#fff' text-anchor='middle'>{{ booking.ticket_code }}</text>
+  </svg>
+
+</div>
+
+<a class='btn btn-primary mt-3' href='{{ url_for("my_bookings") }}'>View my bookings</a>
+{% endblock %}

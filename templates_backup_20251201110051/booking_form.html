@@ -1,0 +1,19 @@
+﻿{% extends 'base.html' %}
+{% block title %}Book Event{% endblock %}
+{% block content %}
+<h2>Book: {{ event.title }}</h2>
+<p>{{ event.description }}</p>
+<p><b>Venue:</b> {{ event.venue }}</p>
+<p><b>Starts:</b> {{ event.start_time }}</p>
+<p><b>Available seats:</b> {{ available }}</p>
+
+{% if available <= 0 %}
+  <div class='alert alert-danger'>Sold out.</div>
+{% else %}
+<form method='POST'>
+  <label>Number of seats (max {{ available }}):</label>
+  <input type='number' name='qty' min='1' max='{{ available }}' value='1' class='form-control mb-2' required>
+  <button class='btn btn-success'>Confirm Booking</button>
+</form>
+{% endif %}
+{% endblock %}

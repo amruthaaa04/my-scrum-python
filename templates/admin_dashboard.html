@@ -1,0 +1,91 @@
+﻿{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h2">Admin Dashboard</h1>
+  <a href="{{ url_for('admin_create_event') }}" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm fw-semibold">+ New Event</a>
+</div>
+
+<h4 class="mb-3">All Events</h4>
+
+<table class="table table-striped table-bordered align-middle">
+  <thead class="table-dark">
+    <tr>
+      <th style="width:5%;">ID</th>
+      <th style="width:28%;">Title</th>
+      <th style="width:14%;">Venue</th>
+      <th style="width:12%;">Start</th>
+      <th style="width:12%;">End</th>
+      <th style="width:10%;">Image</th>
+      <th style="width:14%;">Booked By</th>
+      <th style="width:8%;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ev in events %}
+    <tr>
+      <td class="align-middle">{{ ev.id }}</td>
+      <td class="align-middle">{{ ev.title }}</td>
+      <td class="align-middle">{{ ev.venue }}</td>
+      <td class="align-middle">{{ ev.start_time | nice_dt }}</td>
+      <td class="align-middle">{{ ev.end_time | nice_dt }}</td>
+
+      <td class="align-middle text-center">
+        {% if ev.image_filename %}
+          <img src="{{ url_for('uploads', filename=ev.image_filename) }}" alt="{{ ev.title }}" style="width:90px;height:48px;object-fit:cover;border-radius:6px;border:1px solid #ddd;">
+        {% else %}
+          <span class="text-muted">—</span>
+        {% endif %}
+      </td>
+
+      <!-- Booked By column -->
+      <td class="align-middle">
+        {# If Booking relationship exists on Event, show all booking users #}
+        {% if ev.bookings is defined and ev.bookings|length %}
+          <div>
+            {% for b in ev.bookings %}
+              {% if b.user %}
+                <div>{{ b.user.full_name or b.user.email }} <small class="text-muted">({{ b.user.email }})</small></div>
+              {% else %}
+                <div class="text-muted">User ID: {{ b.user_id }}</div>
+              {% endif %}
+            {% endfor %}
+          </div>
+
+        {# Fallback: if Event has user_id (old simple booking), find the user in users passed in from route #}
+        {% elif ev.user_id %}
+          {% set found = false %}
+          {% for u in users %}
+            {% if u.id == ev.user_id %}
+              <div>{{ u.full_name or u.email }}</div>
+              <div class="text-muted small">{{ u.email }}</div>
+              {% set found = true %}
+            {% endif %}
+          {% endfor %}
+          {% if not found %}
+            <div class="text-muted">User ID: {{ ev.user_id }}</div>
+          {% endif %}
+
+        {% else %}
+          <span class="text-muted">—</span>
+        {% endif %}
+      </td>
+
+      <td class="align-middle text-center d-flex gap-2 justify-content-center">
+        <a href="{{ url_for('admin_edit_event', event_id=ev.id) }}"
+           class="btn btn-warning rounded-pill d-flex align-items-center gap-2 px-3 py-1 shadow-sm fw-semibold" style="font-size:15px;">
+          <i class="bi bi-pencil-square" style="font-size:18px;"></i> Edit
+        </a>
+
+        <a href="{{ url_for('admin_delete_event', event_id=ev.id) }}"
+           onclick="return confirm('Delete this event permanently?');"
+           class="btn btn-danger rounded-pill d-flex align-items-center gap-2 px-3 py-1 shadow-sm fw-semibold" style="font-size:15px;">
+          <i class="bi bi-trash3-fill" style="font-size:18px;"></i> Delete
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

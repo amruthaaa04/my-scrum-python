@@ -1,0 +1,69 @@
+﻿{% extends 'base.html' %}
+{% block title %}My Bookings{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3">My Bookings</h1>
+  <a class="btn btn-outline-secondary" href="{{ url_for('index') }}">← Back to Events</a>
+</div>
+
+{% if not bookings %}
+  <div class="alert alert-info">You have no bookings yet.</div>
+{% else %}
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th style="width:6%;">#</th>
+          <th style="width:36%;">Event</th>
+          <th style="width:18%;">Venue</th>
+          <th style="width:12%;">Seat</th>
+          <th style="width:18%;">Booked At</th>
+          <th style="width:10%;">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if not fallback %}
+          {# bookings are Booking model instances #}
+          {% for b in bookings %}
+          <tr>
+            <td>{{ b.id }}</td>
+            <td>
+              <strong>{{ b.event.title }}</strong><br>
+              <small class="text-muted">{{ b.event.start_time | nice_dt }}</small>
+            </td>
+            <td>{{ b.event.venue }}</td>
+            <td>{{ b.seat or '—' }}</td>
+            <td>{{ b.created_at or '—' }}</td>
+            <td class="text-center">
+              <form method="post" action="{{ url_for('cancel_booking', booking_id=b.id) }}" onsubmit="return confirm('Cancel this booking?');">
+                <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3">Cancel</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          {# fallback rows: dicts with event,created_at,booking_id=None #}
+          {% for r in bookings %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>
+              <strong>{{ r.event.title }}</strong><br>
+              <small class="text-muted">{{ r.event.start_time | nice_dt }}</small>
+            </td>
+            <td>{{ r.event.venue }}</td>
+            <td>{{ r.seat or '—' }}</td>
+            <td>{{ r.created_at or '—' }}</td>
+            <td class="text-center">
+              <form method="post" action="{{ url_for('cancel_booking_event', event_id=r.event.id) }}" onsubmit="return confirm('Cancel this booking?');">
+                <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3">Cancel</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+{% endif %}
+{% endblock %}

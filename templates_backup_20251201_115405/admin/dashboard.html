@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+
+<h4>Events</h4>
+<a href="{{ url_for('admin.create_event') }}" class="btn btn-primary mb-3">+ Create Event</a>
+
+<table class="table table-bordered">
+  <tr>
+    <th>ID</th><th>Title</th><th>Start</th><th>Actions</th>
+  </tr>
+  {% for event in events %}
+  <tr>
+    <td>{{ event.id }}</td>
+    <td>{{ event.title }}</td>
+    <td>{{ event.start_time }}</td>
+    <td>
+      <a href="{{ url_for('admin.edit_event', event_id=event.id) }}" class="btn btn-sm btn-warning">Edit</a>
+      <form action="{{ url_for('admin.delete_event', event_id=event.id) }}" method="POST" style="display:inline;">
+        <button class="btn btn-sm btn-danger">Delete</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h4 class="mt-5">Users</h4>
+<a href="{{ url_for('admin.manage_users') }}" class="btn btn-secondary">Manage Users</a>
+
+{% endblock %}

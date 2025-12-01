@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Edit Event</h2>
+<form method="POST" enctype="multipart/form-data">
+  <input class="form-control mb-2" name="title" value="{{ event.title }}">
+  <textarea class="form-control mb-2" name="description">{{ event.description }}</textarea>
+  <input class="form-control mb-2" name="venue" value="{{ event.venue }}">
+  <input class="form-control mb-2" type="datetime-local" name="start_time" value="{{ event.start_time }}">
+  <input class="form-control mb-2" type="datetime-local" name="end_time" value="{{ event.end_time }}">
+  <input class="form-control mb-2" type="number" name="capacity" value="{{ event.capacity }}">
+  <input class="form-control mb-2" type="file" name="image">
+  <button class="btn btn-success">Save</button>
+</form>
+{% endblock %}

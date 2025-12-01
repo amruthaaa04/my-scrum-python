@@ -1,0 +1,47 @@
+﻿{% extends 'base.html' %}
+{% block title %}Create Event{% endblock %}
+
+{% block content %}
+<h2>Create New Event</h2>
+
+<form method="POST" enctype="multipart/form-data">
+
+  <div class="mb-3">
+    <label>Title</label>
+    <input type="text" class="form-control" name="title">
+  </div>
+
+  <div class="mb-3">
+    <label>Description</label>
+    <textarea class="form-control" name="description"></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label>Venue</label>
+    <input type="text" class="form-control" name="venue">
+  </div>
+
+  <div class="mb-3">
+    <label>Start Time (YYYY-MM-DD HH:MM)</label>
+    <input type="text" class="form-control" name="start_time">
+  </div>
+
+  <div class="mb-3">
+    <label>End Time (YYYY-MM-DD HH:MM)</label>
+    <input type="text" class="form-control" name="end_time">
+  </div>
+
+  <div class="mb-3">
+    <label>Capacity</label>
+    <input type="number" class="form-control" name="capacity" value="50">
+  </div>
+
+  <div class="mb-3">
+    <label>Event Image</label>
+    <input type="file" class="form-control" name="image">
+  </div>
+
+  <button class="btn btn-success">Create Event</button>
+
+</form>
+{% endblock %}

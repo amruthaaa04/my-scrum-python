@@ -1,2 +1,2 @@
-ÿşdef test_smoke():
-    assert 1 + 1 == 2
+ï»¿def test_smoke():
+    assert True
